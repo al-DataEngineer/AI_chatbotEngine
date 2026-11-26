@@ -175,11 +175,6 @@ if user_query := st.chat_input("Ketik pertanyaanmu untuk MinAIEngine..."):
                     for i, doc in enumerate(retrieved_docs, 1):
                         st.markdown(f"**Sumber {i} ({doc.metadata.get('kategori', 'Umum')}):**")
                         st.text(doc.page_content)
-
-                if auto_save_kb:
-                    if simpan_ke_knowledge_base(user_query, answer):
-                        st.caption("✅ Tersimpan otomatis ke `knowledge_base.csv`")
-
                 st.session_state.messages.append({"role": "assistant", "content": answer})
             else:
                 failed_model, err = last_error
