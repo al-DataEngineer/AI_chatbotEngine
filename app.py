@@ -16,11 +16,15 @@ st.caption("Asisten AI berbasis Retrieval-Augmented Generation (RAG) • Dibangu
 
 with st.sidebar:
     st.header("⚙️ Konfigurasi")
-    groq_api_key = st.text_input("Masukkan Groq API Key", type="password", placeholder="gsk_...")
+    if "GROQ_API_KEY" in st.secrets:
+        groq_api_key = st.secrets["GROQ_API_KEY"]
+        st.success("✅ API Key terhubung otomatis")
+    else:
+        groq_api_key = st.text_input("Masukkan Groq API Key", type="password", placeholder="gsk_...")
+    
     k_docs = st.slider("Jumlah dokumen rujukan (Top-K)", min_value=1, max_value=6, value=3)
-    auto_save_kb = st.checkbox("💾 Simpan percakapan ke knowledge_base.csv", value=True)
     st.markdown("---")
-    st.markdown("**Arsitektur:**\n- LLM: Llama 3.3 70B (Groq)\n- Embedding: Multilingual MiniLM-L12\n- Framework: LangChain + Streamlit")
+    st.markdown("**Arsitektur:**\n- LLM: Groq Active Model\n- Embedding: Multilingual MiniLM-L12\n- Framework: LangChain + Streamlit")
 
 if not groq_api_key:
     st.info("👈 Masukkan **GROQ_API_KEY** di sidebar sebelah kiri untuk mulai menggunakan MinAIEngine.")
