@@ -1,0 +1,58 @@
+<svg width="900" height="230" viewBox="0 0 900 230" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="cardBg" x1="0" y1="0" x2="900" y2="230" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0B1120"/>
+      <stop offset="100%" stop-color="#0F172A"/>
+    </linearGradient>
+    <style>
+      .h { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-size: 13px; font-weight: 700; fill: #F8FAFC; }
+      .s { font-family: "JetBrains Mono", Consolas, monospace; font-size: 10.5px; fill: #94A3B8; }
+      .tag { font-family: "JetBrains Mono", Consolas, monospace; font-size: 11px; font-weight: 600; fill: #67E8F9; }
+    </style>
+  </defs>
+
+  <rect x="1" y="1" width="898" height="228" rx="14" fill="url(#cardBg)" stroke="#1E293B" stroke-width="1.4"/>
+  <text x="24" y="30" class="tag">RAG PIPELINE ARCHITECTURE</text>
+
+  <!-- Step 1: User Query -->
+  <rect x="24" y="54" width="150" height="82" rx="10" fill="#162033" stroke="#06B6D4" stroke-opacity="0.5"/>
+  <text x="99" y="88" text-anchor="middle" class="h">User Query</text>
+  <text x="99" y="108" text-anchor="middle" class="s">Streamlit Chat UI</text>
+  <text x="99" y="123" text-anchor="middle" class="s">+ Quick Starters</text>
+
+  <!-- Arrow 1 -->
+  <path d="M174 95 H206" stroke="#38BDF8" stroke-width="2"/>
+  <polygon points="206,90 216,95 206,100" fill="#38BDF8"/>
+
+  <!-- Step 2: Vector Store -->
+  <rect x="216" y="54" width="195" height="82" rx="10" fill="#162033" stroke="#6366F1" stroke-opacity="0.5"/>
+  <text x="313.5" y="86" text-anchor="middle" class="h">Semantic Retrieval</text>
+  <text x="313.5" y="106" text-anchor="middle" class="s">MiniLM-L12-v2 Embeds</text>
+  <text x="313.5" y="121" text-anchor="middle" class="s">InMemoryVectorStore</text>
+
+  <!-- Arrow 2 -->
+  <path d="M411 95 H443" stroke="#38BDF8" stroke-width="2"/>
+  <polygon points="443,90 453,95 443,100" fill="#38BDF8"/>
+
+  <!-- Step 3: Prompt + Context -->
+  <rect x="453" y="54" width="185" height="82" rx="10" fill="#162033" stroke="#06B6D4" stroke-opacity="0.5"/>
+  <text x="545.5" y="86" text-anchor="middle" class="h">Context &amp; Memory</text>
+  <text x="545.5" y="106" text-anchor="middle" class="s">Top-K KB Snippets</text>
+  <text x="545.5" y="121" text-anchor="middle" class="s">+ Chat History</text>
+
+  <!-- Arrow 3 -->
+  <path d="M638 95 H670" stroke="#38BDF8" stroke-width="2"/>
+  <polygon points="670,90 680,95 670,100" fill="#38BDF8"/>
+
+  <!-- Step 4: Groq LLM -->
+  <rect x="680" y="54" width="195" height="82" rx="10" fill="#162033" stroke="#F97316" stroke-opacity="0.55"/>
+  <text x="777.5" y="86" text-anchor="middle" class="h">Groq LLM Engine</text>
+  <text x="777.5" y="106" text-anchor="middle" class="s">Llama 3.1 / 3.3 / Gemma</text>
+  <text x="777.5" y="121" text-anchor="middle" class="s">Auto Model Fallback</text>
+
+  <!-- Self-learning loop -->
+  <path d="M777 136 V182 H313 V146" stroke="#22D3EE" stroke-width="1.6" stroke-dasharray="5 4" fill="none"/>
+  <polygon points="308,146 313,136 318,146" fill="#22D3EE"/>
+  <rect x="405" y="168" width="280" height="28" rx="14" fill="#0F172A" stroke="#22D3EE" stroke-opacity="0.45"/>
+  <text x="545" y="186" text-anchor="middle" class="s" fill="#67E8F9">Auto-Save New Q&amp;A → knowledge_base.csv</text>
+</svg>
