@@ -13,6 +13,8 @@ from langchain_groq import ChatGroq
 from langchain_huggingface import HuggingFaceEmbeddings
 
 KB_PATH = "knowledge_base.csv"
+AI_AVATAR = "assets/ai_avatar.svg" if os.path.exists("assets/ai_avatar.svg") else "🤖"
+USER_AVATAR = "assets/user_avatar.svg" if os.path.exists("assets/user_avatar.svg") else "🧑‍💻"
 
 st.set_page_config(
     page_title="MinAIEngine - AI Assistant",
@@ -399,36 +401,62 @@ code, pre, .stCode, .stText {
     margin: 0.25rem 0 0.65rem 0.15rem;
 }
 
-/* Chat Message Glass Bubbles */
+/* Chat Message Glass Bubbles — Clean Left & Right Airy Layout */
 [data-testid="stChatMessage"] {
+    display: flex !important;
+    align-items: flex-start !important;
+    gap: 0.85rem !important;
     background: var(--glass-bg) !important;
-    backdrop-filter: blur(18px) saturate(160%) !important;
-    -webkit-backdrop-filter: blur(18px) saturate(160%) !important;
-    border: 1px solid var(--glass-border) !important;
-    border-radius: 18px !important;
-    padding: 1.05rem 1.25rem !important;
-    margin-bottom: 0.9rem !important;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.26) !important;
+    backdrop-filter: blur(14px) saturate(150%) !important;
+    -webkit-backdrop-filter: blur(14px) saturate(150%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    border-radius: 20px !important;
+    padding: 1rem 1.3rem !important;
+    margin-bottom: 1.25rem !important;
+    box-shadow: 0 6px 22px rgba(0, 0, 0, 0.16) !important;
     animation: fadeSlideUp 0.38s var(--ease-smooth) both;
-    transition: border-color 0.25s var(--ease-smooth), background 0.25s var(--ease-smooth);
 }
 
+/* Pesan Pengguna di Kanan */
 [data-testid="stChatMessage"]:has([data-testid="stChatMessageAvatarUser"]) {
-    background: linear-gradient(135deg, rgba(6, 182, 212, 0.11) 0%, rgba(99, 102, 241, 0.08) 100%) !important;
-    border: 1px solid rgba(6, 182, 212, 0.28) !important;
-    margin-left: 2.2rem !important;
+    flex-direction: row-reverse !important;
+    margin-left: auto !important;
+    margin-right: 0 !important;
+    width: fit-content !important;
+    max-width: 72% !important;
+    border-radius: 20px 20px 6px 20px !important;
+    background: linear-gradient(135deg, rgba(6, 182, 212, 0.14) 0%, rgba(99, 102, 241, 0.12) 100%) !important;
+    border: 1px solid rgba(56, 189, 248, 0.25) !important;
+    padding: 0.85rem 1.15rem !important;
 }
 
+[data-testid="stChatMessage"]:has([data-testid="stChatMessageAvatarUser"]) [data-testid="stChatMessageContent"] {
+    text-align: left !important;
+}
+
+/* Pesan Asisten di Kiri */
 [data-testid="stChatMessage"]:has([data-testid="stChatMessageAvatarAssistant"]) {
-    background: rgba(255, 255, 255, 0.04) !important;
-    border: 1px solid rgba(255, 255, 255, 0.12) !important;
-    margin-right: 1rem !important;
+    margin-right: auto !important;
+    margin-left: 0 !important;
+    max-width: 84% !important;
+    border-radius: 20px 20px 20px 6px !important;
+    background: rgba(255, 255, 255, 0.03) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
 }
 
 [data-testid="stChatMessage"] p,
 [data-testid="stChatMessage"] li {
-    color: var(--text-primary) !important;
-    line-height: 1.65 !important;
+    color: #E2E8F0 !important;
+    line-height: 1.7 !important;
+    font-size: 0.94rem !important;
+}
+
+[data-testid="stChatMessageAvatarUser"],
+[data-testid="stChatMessageAvatarAssistant"] {
+    border-radius: 50% !important;
+    overflow: hidden !important;
+    box-shadow: 0 0 14px rgba(56, 189, 248, 0.28) !important;
+    background: transparent !important;
 }
 
 /* Expander & Reference Glass Cards */
@@ -1082,7 +1110,7 @@ if not chat_started:
 
 # --- Tampilkan Riwayat Chat ---
 for msg in st.session_state.messages:
-    avatar = "🧑‍💻" if msg["role"] == "user" else "🤖"
+    avatar = USER_AVATAR if msg["role"] == "user" else AI_AVATAR
     with st.chat_message(msg["role"], avatar=avatar):
         st.markdown(msg["content"])
 
@@ -1093,10 +1121,10 @@ if user_query:
     )
 
     st.session_state.messages.append({"role": "user", "content": user_query})
-    with st.chat_message("user", avatar="🧑‍💻"):
+    with st.chat_message("user", avatar=USER_AVATAR):
         st.markdown(user_query)
 
-    with st.chat_message("assistant", avatar="🤖"):
+    with st.chat_message("assistant", avatar=AI_AVATAR):
         with st.spinner("MinAIEngine sedang berpikir..."):
             retrieved_docs = vector_store.similarity_search(user_query, k=k_docs)
             context_text = "\n\n---\n\n".join([d.page_content for d in retrieved_docs])
